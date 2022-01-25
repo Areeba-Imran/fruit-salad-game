@@ -1,0 +1,10 @@
+body{
+    margin: 0px;
+    padding: 0px;
+}
+
+canvas{
+    background-color: pink;
+    width: 1385px;
+    height: 600px
+}
