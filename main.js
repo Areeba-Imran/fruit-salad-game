@@ -16,3 +16,15 @@ function draw(){
     game.draw()
 
 }
+
+function keyPressed(){
+
+    if(keyCode === 32){
+
+        if(game.maxJumpCounter < 2){
+
+            game.maxJumpCounter++
+            game.player.jump()
+        }
+    }
+}

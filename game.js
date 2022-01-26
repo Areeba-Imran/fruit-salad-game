@@ -3,11 +3,17 @@ class Game{
     constructor(){
 
         this.backgroundImgArr = []
+        this.maxJumpCounter = 0
     }
 
     setup(){
+        frameRate()
 
         this.background = new Background()
+        this.player = new Player()
+
+        manageFruits()
+        this.fruit = new Fruit()
     }
 
     preload(){
@@ -25,11 +31,33 @@ class Game{
             {src: loadImage('assets/foreground.png'), x: 0, y: 438, widthOfImg: 1365, heightOfImg: 160, speed: 4}
         ]
 
-        
+        this.fruitImgArr = [
+            {src: loadImage('assets/fruits/avacado.png')},
+            {src: loadImage('assets/fruits/banana.png')},
+            {src: loadImage('assets/fruits/blueberry.png')},
+            {src: loadImage('assets/fruits/cherry.png')},
+            {src: loadImage('assets/fruits/grapes.png')},
+            {src: loadImage('assets/fruits/kiwi.png')},
+            {src: loadImage('assets/fruits/orange.png')},
+            {src: loadImage('assets/fruits/peach.png')},
+            {src: loadImage('assets/fruits/pear.png')},
+            {src: loadImage('assets/fruits/pineapple.png')},
+            {src: loadImage('assets/fruits/pomegranate.png')},
+            {src: loadImage('assets/fruits/raspberry.png')},
+            {src: loadImage('assets/fruits/strawberry.png')},
+            {src: loadImage('assets/fruits/watermelon.png')}
+        ]
+
+        this.playerImage = loadImage('assets/player-run.gif')
+        this.playerJumpImg = loadImage('assets/player-jump.gif')
     }
 
     draw(){
 
         this.background.draw()
+        this.player.draw()
+
+        // if(frameCount % 120)
+        this.fruit.draw()
     }
 }
