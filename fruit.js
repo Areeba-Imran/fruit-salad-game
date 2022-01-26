@@ -3,23 +3,23 @@ class Fruit{
     constructor(){
 
         this.randomFruitIndex
-        this.speed = 1
+        this.speed = 2
         this.x = 1385
-        this.fruitAdded = false
+        this.fruitDisplayed = false
+        this.currentFruit
     }
 
     draw(){
 
-        //setInterval(this.draw, 3000)
-console.log('fruit draw')
+        if(!this.fruitDisplayed){
+            this.randomFruitIndex = Math.floor(Math.random() * game.fruitImgArr.length)
+            this.randomIndexOfY = Math.random() * 400
+            this.fruitDisplayed = true
+        }
 
-            if(!this.fruitAdded){
-        this.randomFruitIndex = Math.floor(Math.random() * game.fruitImgArr.length)
-        this.randomIndexOfY = Math.floor(Math.random() * 400)
-        this.fruitAdded = true
-            }
+        this.currentFruit = game.fruitImgArr[this.randomFruitIndex]
 
         this.x -= this.speed
-        image(game.fruitImgArr[this.randomFruitIndex].src, this.x, this.randomIndexOfY, 100, 100)
+        image(this.currentFruit.src, this.x, this.randomIndexOfY, this.currentFruit.widthOfFruit, this.currentFruit.heightOfFruit)
     }
 }

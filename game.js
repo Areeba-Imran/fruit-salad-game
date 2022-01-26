@@ -4,6 +4,7 @@ class Game{
 
         this.backgroundImgArr = []
         this.maxJumpCounter = 0
+        this.fruitsDisplayedArr = []
     }
 
     setup(){
@@ -11,9 +12,7 @@ class Game{
 
         this.background = new Background()
         this.player = new Player()
-
-        manageFruits()
-        this.fruit = new Fruit()
+        
     }
 
     preload(){
@@ -32,20 +31,20 @@ class Game{
         ]
 
         this.fruitImgArr = [
-            {src: loadImage('assets/fruits/avacado.png')},
-            {src: loadImage('assets/fruits/banana.png')},
-            {src: loadImage('assets/fruits/blueberry.png')},
-            {src: loadImage('assets/fruits/cherry.png')},
-            {src: loadImage('assets/fruits/grapes.png')},
-            {src: loadImage('assets/fruits/kiwi.png')},
-            {src: loadImage('assets/fruits/orange.png')},
-            {src: loadImage('assets/fruits/peach.png')},
-            {src: loadImage('assets/fruits/pear.png')},
-            {src: loadImage('assets/fruits/pineapple.png')},
-            {src: loadImage('assets/fruits/pomegranate.png')},
-            {src: loadImage('assets/fruits/raspberry.png')},
-            {src: loadImage('assets/fruits/strawberry.png')},
-            {src: loadImage('assets/fruits/watermelon.png')}
+            {src: loadImage('assets/fruits/avacado.png'), widthOfFruit: 75, heightOfFruit: 75},
+            {src: loadImage('assets/fruits/banana.png'), widthOfFruit: 80, heightOfFruit: 65},
+            {src: loadImage('assets/fruits/blueberry.png'), widthOfFruit: 85, heightOfFruit: 75},
+            {src: loadImage('assets/fruits/cherry.png'), widthOfFruit: 75, heightOfFruit: 75},
+            {src: loadImage('assets/fruits/grapes.png'), widthOfFruit: 65, heightOfFruit: 85},
+            {src: loadImage('assets/fruits/kiwi.png'), widthOfFruit: 75, heightOfFruit: 60},
+            {src: loadImage('assets/fruits/orange.png'), widthOfFruit: 75, heightOfFruit: 75},
+            {src: loadImage('assets/fruits/peach.png'), widthOfFruit: 60, heightOfFruit: 60},
+            {src: loadImage('assets/fruits/pear.png'), widthOfFruit: 90, heightOfFruit: 90},
+            {src: loadImage('assets/fruits/pineapple.png'), widthOfFruit: 60, heightOfFruit: 90},
+            {src: loadImage('assets/fruits/pomegranate.png'), widthOfFruit: 80, heightOfFruit: 75},
+            {src: loadImage('assets/fruits/raspberry.png'), widthOfFruit: 85, heightOfFruit: 75},
+            {src: loadImage('assets/fruits/strawberry.png'), widthOfFruit: 70, heightOfFruit: 70},
+            {src: loadImage('assets/fruits/watermelon.png'), widthOfFruit: 90, heightOfFruit: 80}
         ]
 
         this.playerImage = loadImage('assets/player-run.gif')
@@ -56,8 +55,17 @@ class Game{
 
         this.background.draw()
         this.player.draw()
+        console.log(frameCount)
+        
 
-        // if(frameCount % 120)
-        this.fruit.draw()
+        if(frameCount % 180  === 0){
+
+            this.fruitsDisplayedArr.push(new Fruit())
+        }
+
+        this.fruitsDisplayedArr.forEach(fruitObj => {
+
+            fruitObj.draw()
+        })   
     }
 }

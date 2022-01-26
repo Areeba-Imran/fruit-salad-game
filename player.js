@@ -4,14 +4,13 @@ class Player{
 
         this.heightFromGround = 0
         this.y = 320
-        this.gravity= 0.3
+        this.gravity= 0.2
         this.onGround = true
     }
 
     jump(){
 
-        //game.playerImage = loadImage('assets/player-jump.gif')
-        this.heightFromGround = -10
+        this.heightFromGround = -8
         this.onGround = false
 
     }
@@ -25,7 +24,6 @@ class Player{
             this.y = 320 
             game.maxJumpCounter = 0
             this.onGround = true
-            // image(game.playerImage, 170, this.y, 120, 150)
         }
 
         if(this.onGround) {
@@ -38,9 +36,5 @@ class Player{
         if(!this.onGround){
             image(game.playerJumpImg, 170, this.y, 120, 150)
         }
-        
-
-        //if(this.heightFromGround === 1)
-
     }
 }
