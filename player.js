@@ -3,9 +3,12 @@ class Player{
     constructor(){
 
         this.heightFromGround = 0
+        this.x = 170
         this.y = 320
         this.gravity= 0.2
         this.onGround = true
+        this.width = 120
+        this.height= 150
     }
 
     jump(){
@@ -19,6 +22,7 @@ class Player{
 
         this.heightFromGround += this.gravity
         this.y += this.heightFromGround
+
         if(this.y > 320){
 
             this.y = 320 
@@ -26,15 +30,11 @@ class Player{
             this.onGround = true
         }
 
-        if(this.onGround) {
+        if(this.onGround) 
+            image(game.playerImage, this.x, this.y, this.width, this.height)
 
-            image(game.playerImage, 170, this.y, 120, 150)
 
-            
-        }
-
-        if(!this.onGround){
-            image(game.playerJumpImg, 170, this.y, 120, 150)
-        }
+        if(!this.onGround)
+            image(game.playerJumpImg, this.x, this.y, this.width, this.height)
     }
 }

@@ -5,6 +5,7 @@ class Game{
         this.backgroundImgArr = []
         this.maxJumpCounter = 0
         this.fruitsDisplayedArr = []
+        this.score = 0
     }
 
     setup(){
@@ -12,6 +13,7 @@ class Game{
 
         this.background = new Background()
         this.player = new Player()
+        this.fruit = new Fruit()
         
     }
 
@@ -26,8 +28,8 @@ class Game{
             {src: loadImage('assets/Tree1.png'), x: 0, y: 0, widthOfImg: 1385, heightOfImg: 430, speed: 3},
             {src: loadImage('assets/Bush.png'), x: 0, y: 280, widthOfImg: 1385, heightOfImg: 185, speed: 3},
             {src: loadImage('assets/Random items.png'), x: 130, y: 300, widthOfImg: 1195, heightOfImg: 125, speed: 3},
-            {src: loadImage('assets/flooring.png'), x: 0, y: 380, widthOfImg: 1389, heightOfImg: 220, speed: 4},
-            {src: loadImage('assets/foreground.png'), x: 0, y: 438, widthOfImg: 1365, heightOfImg: 160, speed: 4}
+            {src: loadImage('assets/flooring.png'), x: 0, y: 380, widthOfImg: 1389, heightOfImg: 220, speed: 4.5},
+            {src: loadImage('assets/foreground.png'), x: 0, y: 438, widthOfImg: 1365, heightOfImg: 160, speed: 4.5}
         ]
 
         this.fruitImgArr = [
@@ -54,18 +56,37 @@ class Game{
     draw(){
 
         this.background.draw()
-        this.player.draw()
-        console.log(frameCount)
-        
 
         if(frameCount % 180  === 0){
-
-            this.fruitsDisplayedArr.push(new Fruit())
+           this.fruitsDisplayedArr.push(new Fruit())
         }
 
         this.fruitsDisplayedArr.forEach(fruitObj => {
-
             fruitObj.draw()
-        })   
+        })
+            this.fruitsDisplayedArr.filter((fruitObj)=>{
+                if(fruitObj.collision(this.player)){
+
+                    this.fruitsDisplayedArr.splice(fruitObj,1)
+                    return true
+                
+                }
+
+                else
+                return false
+            })
+        
+
+        this.player.draw()
+
+
+        fill(255)
+        rect(10, 10, 120, 100, 20);
+
+        fill(8)
+        text(`Score: ${game.score}`, 15, 30);
+
+
+        
     }
 }
