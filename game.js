@@ -1,16 +1,23 @@
 class Game{
 
     constructor(){
+        
+        this.fontsize = 15
+        
 
         this.backgroundImgArr = []
         this.maxJumpCounter = 0
         this.fruitsDisplayedArr = []
         this.score = 0
+        this.lives = 3
         this.obstaclesDisplayedArr = []
+        this.pause = false
     }
 
     setup(){
-        frameRate()
+
+        textFont(this.font);
+        textSize(this.fontsize);
 
         this.background = new Background()
         this.player = new Player()
@@ -19,7 +26,9 @@ class Game{
     }
 
     preload(){
- 
+
+        this.font = loadFont('assets/PressStart2P-Regular.ttf');
+
         this.backgroundImgArr = [
             {src: loadImage('assets/sky.png'), x: 0, y: 0, widthOfImg: 1385, heightOfImg: 600, speed: 0},
             {src: loadImage('assets/City.png'), x: 130, y: 60, widthOfImg: 1000, heightOfImg: 270, speed: 0.5},
@@ -52,52 +61,120 @@ class Game{
 
         this.obstacleImg = loadImage('assets/obstacles/campfire.gif')
 
-        this.playerImage = loadImage('assets/player-run.gif')
-        this.playerJumpImg = loadImage('assets/player-jump.gif')
+        this.playerRun = loadImage('assets/player/player-run.gif')
+        this.playerJumpImg = loadImage('assets/player/player-jump.gif')
+        this.playerHurt= loadImage('assets/player/player-hurt.png')
+        this.playerDie = loadImage('assets/player/player-die.gif')
+        this.playerStillImg = loadImage('assets/player/player-intro-img.png')
+
+        this.livesRemaining = loadImage('assets/lives.png')
     }
 
     draw(){
 
-        this.background.draw()
+        if (!this.pause){
 
-        if(frameCount % 180  === 0){
+            this.background.draw()
 
-           this.fruitsDisplayedArr.push(new Fruit())
-        }
+            if(frameCount % 180  === 0){
 
-        this.fruitsDisplayedArr.forEach(fruitObj => {
-
-            fruitObj.draw()   
-        })
-
-        this.fruitsDisplayedArr.forEach((fruitObj)=>{
-            if(fruitObj.collision(this.player)){
-
-                this.fruitsDisplayedArr.splice(fruitObj,1)
-                return true
+            this.fruitsDisplayedArr.push(new Fruit())
             }
 
-            else
-                return false
-        })
+            this.fruitsDisplayedArr.forEach(fruitObj => {
 
-        if(frameCount % 300 === 0)
-            this.obstaclesDisplayedArr.push(new Obstacle())
-        
-        this.obstaclesDisplayedArr.forEach(obstacle => {
+                fruitObj.draw()   
+            })
 
-            obstacle.draw()
-        })
-        
+            this.fruitsDisplayedArr.forEach((fruitObj)=>{
+                if(fruitObj.collision(this.player)){
 
-        this.player.draw()
+                    this.fruitsDisplayedArr.splice(fruitObj,1)
+                    return true
+                }
+
+                else
+                    return false
+            })
+
+            if(frameCount % 300 === 0)
+                this.obstaclesDisplayedArr.push(new Obstacle())
+            
+            this.obstaclesDisplayedArr.forEach(obstacle => {
+
+                obstacle.draw()
+            })
+
+            this.obstaclesDisplayedArr.forEach(obstacle => {
+
+                if(obstacle.collision(this.player)){
+
+                    this.player.isHurt = true
+                    frameRate(2)
+                    return true
+                }
+
+                else
+                this.player.isHurt = false
+                    return false
+            })
+            
+
+            this.player.draw()
 
 
-        fill(255)
-        rect(10, 10, 120, 100, 20);
+            fill(117, 28, 108, 150)
+            rect(5, 5, 200, 100, 20);
 
-        fill(8)
-        text(`Score: ${game.score}`, 15, 30);
+            fill(255)
+            text(`Score: ${game.score}`, 15, 40);
+            text(`Lives: `, 15, 70);
 
+            this.createHeartIcons()
+        }
+
+        else{
+
+            fill(0)
+            text('Game Paused', 600, 50)
+            text('Press Enter to Resume', 550, 470)
+        }
+    }
+
+    createHeartIcons(){
+
+        let initialPositionX = 110
+        let distanceBetweenHearts = 22
+
+        for(let i = this.lives; i > 0; i--){
+
+            image(this.livesRemaining, initialPositionX, 50, 20, 20)
+            initialPositionX += distanceBetweenHearts
+       }
+    }
+
+    gameOver(){
+
+        fill(0)
+        textSize(30);
+        text('Game Over', 600, 100)
+        text('Press Enter to Play Again', 400, 470)
+    }
+
+    gameInstructions(){
+
+
+       // stroke(167, 243, 241)
+        strokeWeight(3)
+        fill(167, 243, 241)
+        rect(310, 180, 740, 250, 10)
+
+        fill(0)
+        text('Help Rosie to pick some fruit for a fruit salad!', 320, 210)
+        text('Press Spacebar to catch fruit and avoid fire', 360, 280)
+        text('Press Shift to Pause', 540, 350)
+        text('Press Spacebar to Start!', 520, 420)
+
+        image(this.playerStillImg, 270, 300, 150, 150)
     }
 }

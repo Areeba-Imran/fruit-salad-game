@@ -3,18 +3,24 @@ class Player{
     constructor(){
 
         this.heightFromGround = 0
-        this.x = 170
+        this.x = 190
         this.y = 320
         this.gravity= 0.2
         this.onGround = true
         this.width = 120
         this.height= 150
+        this.isHurt = false
     }
 
     jump(){
 
-        this.heightFromGround = -8
-        this.onGround = false
+        if(game.maxJumpCounter < 2){ 
+
+            game.maxJumpCounter++
+            this.heightFromGround = -8
+            this.onGround = false
+        }
+            
 
     }
 
@@ -30,11 +36,15 @@ class Player{
             this.onGround = true
         }
 
-        if(this.onGround) 
-            image(game.playerImage, this.x, this.y, this.width, this.height)
+        if(this.isHurt){
+            image(game.playerHurt, this.x, this.y + 10, this.width + 50, this.height + 10)
+        }
+            
 
-
-        if(!this.onGround)
+        if(this.onGround && !this.isHurt) 
+            image(game.playerRun, this.x, this.y, this.width, this.height)
+            
+        if(!this.onGround && !this.isHurt)
             image(game.playerJumpImg, this.x, this.y, this.width, this.height)
     }
 }
