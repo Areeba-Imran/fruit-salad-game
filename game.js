@@ -6,6 +6,7 @@ class Game{
         this.maxJumpCounter = 0
         this.fruitsDisplayedArr = []
         this.score = 0
+        this.obstaclesDisplayedArr = []
     }
 
     setup(){
@@ -14,7 +15,7 @@ class Game{
         this.background = new Background()
         this.player = new Player()
         this.fruit = new Fruit()
-        
+        this.obstacle = new Obstacle()
     }
 
     preload(){
@@ -49,6 +50,8 @@ class Game{
             {src: loadImage('assets/fruits/watermelon.png'), widthOfFruit: 90, heightOfFruit: 80}
         ]
 
+        this.obstacleImg = loadImage('assets/obstacles/campfire.gif')
+
         this.playerImage = loadImage('assets/player-run.gif')
         this.playerJumpImg = loadImage('assets/player-jump.gif')
     }
@@ -58,23 +61,33 @@ class Game{
         this.background.draw()
 
         if(frameCount % 180  === 0){
+
            this.fruitsDisplayedArr.push(new Fruit())
         }
 
         this.fruitsDisplayedArr.forEach(fruitObj => {
-            fruitObj.draw()
+
+            fruitObj.draw()   
         })
-            this.fruitsDisplayedArr.filter((fruitObj)=>{
-                if(fruitObj.collision(this.player)){
 
-                    this.fruitsDisplayedArr.splice(fruitObj,1)
-                    return true
-                
-                }
+        this.fruitsDisplayedArr.forEach((fruitObj)=>{
+            if(fruitObj.collision(this.player)){
 
-                else
+                this.fruitsDisplayedArr.splice(fruitObj,1)
+                return true
+            }
+
+            else
                 return false
-            })
+        })
+
+        if(frameCount % 300 === 0)
+            this.obstaclesDisplayedArr.push(new Obstacle())
+        
+        this.obstaclesDisplayedArr.forEach(obstacle => {
+
+            obstacle.draw()
+        })
         
 
         this.player.draw()
@@ -86,7 +99,5 @@ class Game{
         fill(8)
         text(`Score: ${game.score}`, 15, 30);
 
-
-        
     }
 }
