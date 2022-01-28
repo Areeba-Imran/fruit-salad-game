@@ -21,7 +21,6 @@ function draw(){
             game.draw()
 
         else{
-
             game.gameOver()
         }
     }
@@ -30,8 +29,6 @@ function draw(){
 
         game.gameInstructions()
     }
-    
-
 }
 
 function keyPressed(){
@@ -39,18 +36,14 @@ function keyPressed(){
     if(keyCode === 32 && !gameStarted)
         gameStarted = true
 
-    if(keyCode === 32){
-
+    if(keyCode === 32)
         game.player.jump()
-    }
-
-    if(keyCode === 13){
-        location.reload()
-    }
-
-    if(keyCode === 16){
-        game.pause = !game.pause
-    }
-
     
+
+    if(keyCode === 13)
+        location.reload()
+    
+
+    if(keyCode === 16)
+        game.pause = !game.pause
 }

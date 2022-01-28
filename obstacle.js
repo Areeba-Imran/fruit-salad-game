@@ -22,7 +22,6 @@ class Obstacle{
 	
 		let obstacleX = this.x + this.width/2
 		let obstacleY = this.y + this.height/2
-		// the middle of the player
 		let playerX = playerInfo.x + playerInfo.width/2
 		let playerY = playerInfo.y + playerInfo.height/2
 
@@ -35,6 +34,7 @@ class Obstacle{
          
 			return true
 		} 
+        
         else {
 			frameRate(60)
 			return false

@@ -16,12 +16,11 @@ class Player{
 
         if(game.maxJumpCounter < 2){ 
 
+            game.jumpSound.play()
             game.maxJumpCounter++
             this.heightFromGround = -8
             this.onGround = false
         }
-            
-
     }
 
     draw(){

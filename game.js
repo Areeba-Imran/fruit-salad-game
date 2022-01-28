@@ -3,8 +3,6 @@ class Game{
     constructor(){
         
         this.fontsize = 15
-        
-
         this.backgroundImgArr = []
         this.maxJumpCounter = 0
         this.fruitsDisplayedArr = []
@@ -12,6 +10,8 @@ class Game{
         this.lives = 3
         this.obstaclesDisplayedArr = []
         this.pause = false
+        this.gameOverSoundPlayed = false
+        
     }
 
     setup(){
@@ -23,9 +23,16 @@ class Game{
         this.player = new Player()
         this.fruit = new Fruit()
         this.obstacle = new Obstacle()
+        this.backgroundMusic.play()
     }
 
     preload(){
+
+        this.jumpSound = loadSound('assets/sounds/player-jump.mp3')
+        this.collectFruitSound = loadSound('assets/sounds/collect-fruit.mp3')
+        this.obstacleHitSound = loadSound('assets/sounds/obstacle-hit.mp3')
+        this.backgroundMusic = createAudio('assets/sounds/background-music.mp3')
+        this.gameOverMusic = loadSound('assets/sounds/game-over.mp3')
 
         this.font = loadFont('assets/PressStart2P-Regular.ttf');
 
@@ -74,6 +81,8 @@ class Game{
 
         if (!this.pause){
 
+            this.backgroundMusic.loop()
+
             this.background.draw()
 
             if(frameCount % 180  === 0){
@@ -89,6 +98,7 @@ class Game{
             this.fruitsDisplayedArr.forEach((fruitObj)=>{
                 if(fruitObj.collision(this.player)){
 
+                    this.collectFruitSound.play()
                     this.fruitsDisplayedArr.splice(fruitObj,1)
                     return true
                 }
@@ -109,6 +119,7 @@ class Game{
 
                 if(obstacle.collision(this.player)){
 
+                    this.obstacleHitSound.play()
                     this.player.isHurt = true
                     frameRate(2)
                     return true
@@ -135,6 +146,8 @@ class Game{
 
         else{
 
+            this.backgroundMusic.stop()
+
             fill(0)
             text('Game Paused', 600, 50)
             text('Press Enter to Resume', 550, 470)
@@ -155,6 +168,13 @@ class Game{
 
     gameOver(){
 
+        this.backgroundMusic.stop()
+        
+        if(!this.alreadyPlayed)
+            this.gameOverMusic.play()
+        
+        this.gameOverSoundPlayed = true
+
         fill(0)
         textSize(30);
         text('Game Over', 600, 100)
@@ -163,8 +183,6 @@ class Game{
 
     gameInstructions(){
 
-
-       // stroke(167, 243, 241)
         strokeWeight(3)
         fill(167, 243, 241)
         rect(310, 180, 740, 250, 10)
