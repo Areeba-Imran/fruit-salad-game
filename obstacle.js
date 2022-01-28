@@ -30,9 +30,9 @@ class Obstacle{
 
             game.lives --
 			console.log("lives: " + game.lives)
-            this.alreadyCollided = true
-         
-			return true
+            this.alreadyCollided = true                     //so that it doesn't keep checking for collisions
+                                                            //after the player has collided once with the obstacle and is still
+			return true                                     //in proximity with the obstacle
 		} 
         
         else {

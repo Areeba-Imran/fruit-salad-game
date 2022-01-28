@@ -4,20 +4,20 @@ class Fruit{
 
         this.randomFruitIndex
         this.speed = 4
-        this.x = 1385
+        this.x = 1385                    //same as canvas width
         this.fruitDisplayed = false
         this.currentFruit
     }
 
     draw(){
 
-        if(!this.fruitDisplayed){
+        if(!this.fruitDisplayed){       //gets a random y-index only once per object
             this.randomFruitIndex = Math.floor(Math.random() * game.fruitImgArr.length)
             this.y = Math.random() * 400
             this.fruitDisplayed = true
         }
 
-        this.currentFruit = game.fruitImgArr[this.randomFruitIndex]
+        this.currentFruit = game.fruitImgArr[this.randomFruitIndex]     //gets a random object from the array
 
         this.x -= this.speed
         image(this.currentFruit.src, this.x, this.y, this.currentFruit.widthOfFruit, this.currentFruit.heightOfFruit)

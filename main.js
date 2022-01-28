@@ -15,8 +15,8 @@ function preload(){
 
 function draw(){
 
-    if(gameStarted){
-
+    if(gameStarted){                            //if game has started then execute game's draw()
+                                                
         if(game.lives > 0)
             game.draw()
 
@@ -25,25 +25,24 @@ function draw(){
         }
     }
 
-    else{
-
+    else                                          //else display game instructions       
         game.gameInstructions()
-    }
+    
 }
 
 function keyPressed(){
 
-    if(keyCode === 32 && !gameStarted)
+    if(keyCode === 32 && !gameStarted)              //Spacebar for initial starting of the game
         gameStarted = true
 
-    if(keyCode === 32)
+    if(keyCode === 32)                              //Spacebar for jump 
         game.player.jump()
     
 
-    if(keyCode === 13)
+    if(keyCode === 13)                              //Enter for playing again/ screen reload
         location.reload()
     
 
-    if(keyCode === 16)
+    if(keyCode === 16)                              //Shift for game pause
         game.pause = !game.pause
 }

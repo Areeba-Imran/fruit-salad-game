@@ -14,8 +14,8 @@ class Player{
 
     jump(){
 
-        if(game.maxJumpCounter < 2){ 
-
+        if(game.maxJumpCounter < 2){             //checks if player has not exceeded 2 jumps
+                                                //in a row
             game.jumpSound.play()
             game.maxJumpCounter++
             this.heightFromGround = -8
@@ -28,11 +28,11 @@ class Player{
         this.heightFromGround += this.gravity
         this.y += this.heightFromGround
 
-        if(this.y > 320){
+        if(this.y > 320){                               //to keep player from moving down the screen
 
             this.y = 320 
-            game.maxJumpCounter = 0
-            this.onGround = true
+            game.maxJumpCounter = 0                     //resets to 0 for allowing 2
+            this.onGround = true                        //consecutive jumps
         }
 
         if(this.isHurt){

@@ -28,13 +28,15 @@ class Game{
 
     preload(){
 
-        this.jumpSound = loadSound('assets/sounds/player-jump.mp3')
+        this.jumpSound = loadSound('assets/sounds/player-jump.mp3')             //Sounds
         this.collectFruitSound = loadSound('assets/sounds/collect-fruit.mp3')
         this.obstacleHitSound = loadSound('assets/sounds/obstacle-hit.mp3')
         this.backgroundMusic = createAudio('assets/sounds/background-music.mp3')
         this.gameOverMusic = loadSound('assets/sounds/game-over.mp3')
 
         this.font = loadFont('assets/PressStart2P-Regular.ttf');
+
+        this.livesRemaining = loadImage('assets/lives.png')                   //heart icons                      
 
         this.backgroundImgArr = [
             {src: loadImage('assets/sky.png'), x: 0, y: 0, widthOfImg: 1385, heightOfImg: 600, speed: 0},
@@ -73,8 +75,6 @@ class Game{
         this.playerHurt= loadImage('assets/player/player-hurt.png')
         this.playerDie = loadImage('assets/player/player-die.gif')
         this.playerStillImg = loadImage('assets/player/player-intro-img.png')
-
-        this.livesRemaining = loadImage('assets/lives.png')
     }
 
     draw(){
@@ -85,21 +85,21 @@ class Game{
 
             this.background.draw()
 
-            if(frameCount % 180  === 0){
+            if(frameCount % 180  === 0){                        //creates a new fruit object after every 3 sec
 
-            this.fruitsDisplayedArr.push(new Fruit())
+            this.fruitsDisplayedArr.push(new Fruit())           //And pushes it into an array 
             }
 
-            this.fruitsDisplayedArr.forEach(fruitObj => {
-
+            this.fruitsDisplayedArr.forEach(fruitObj => {       //calls fruit's draw() on all the Fruit objects
+                                                                //in the array
                 fruitObj.draw()   
             })
 
-            this.fruitsDisplayedArr.forEach((fruitObj)=>{
-                if(fruitObj.collision(this.player)){
+            this.fruitsDisplayedArr.forEach((fruitObj)=>{       //checks if any fruitObj in the array has 
+                if(fruitObj.collision(this.player)){            //collided with the player
 
                     this.collectFruitSound.play()
-                    this.fruitsDisplayedArr.splice(fruitObj,1)
+                    this.fruitsDisplayedArr.splice(fruitObj,1)     //removes that fruitObj from the array
                     return true
                 }
 
@@ -107,13 +107,13 @@ class Game{
                     return false
             })
 
-            if(frameCount % 300 === 0)
+            if(frameCount % 300 === 0)                              //creates a new obstacle object after every 5 sec
                 this.obstaclesDisplayedArr.push(new Obstacle())
             
             this.obstaclesDisplayedArr.forEach(obstacle => {
 
                 obstacle.draw()
-            })
+            })                                                      //same working as with fruit array
 
             this.obstaclesDisplayedArr.forEach(obstacle => {
 
@@ -121,8 +121,8 @@ class Game{
 
                     this.obstacleHitSound.play()
                     this.player.isHurt = true
-                    frameRate(2)
-                    return true
+                    frameRate(2)                                    //frameRate(2) sortof pauses the moment
+                    return true                                     //when the player hits the obstacle
                 }
 
                 else
@@ -134,8 +134,8 @@ class Game{
             this.player.draw()
 
 
-            fill(117, 28, 108, 150)
-            rect(5, 5, 200, 100, 20);
+            fill(117, 28, 108, 150)                                 //The side panel for displaying score
+            rect(5, 5, 200, 100, 20);                               // and lives remaining
 
             fill(255)
             text(`Score: ${game.score}`, 15, 40);
@@ -144,22 +144,22 @@ class Game{
             this.createHeartIcons()
         }
 
-        else{
+        else{                                                       //incase the game is paused
 
             this.backgroundMusic.stop()
 
             fill(0)
             text('Game Paused', 600, 50)
-            text('Press Enter to Resume', 550, 470)
+            text('Press Shift to Resume', 550, 470)
         }
     }
 
     createHeartIcons(){
 
-        let initialPositionX = 110
+        let initialPositionX = 110                                 //x axis of the first heart from the left
         let distanceBetweenHearts = 22
 
-        for(let i = this.lives; i > 0; i--){
+        for(let i = this.lives; i > 0; i--){                       //prints the number of hearts wrt lives remaining
 
             image(this.livesRemaining, initialPositionX, 50, 20, 20)
             initialPositionX += distanceBetweenHearts
@@ -170,9 +170,9 @@ class Game{
 
         this.backgroundMusic.stop()
         
-        if(!this.alreadyPlayed)
-            this.gameOverMusic.play()
-        
+        if(!this.gameOverSoundPlayed)                           //so that this sound doesn't keep playing
+            this.gameOverMusic.play()                           //again and again when this function is called
+                                                                //continuously
         this.gameOverSoundPlayed = true
 
         fill(0)
